@@ -24,6 +24,7 @@
         margin: 90px 0 40px;
       }
       .report_window .data_view_footer {
+        display: none;
         float: right;
       }
     </style>
@@ -68,24 +69,22 @@
         var dateRange = dateSelect.val();
         
         var queryParams = {
+          'query_name': 'ios_fragmentation',
           'from_date': new Date(dateRange.from).toISOString().split('T')[0],
           'to_date': new Date(dateRange.to).toISOString().split('T')[0],
-          'unit': 'day',
-          'query_name': 'ios_fragmentation'
+          'unit': 'day'
         };
+        $.get('https://mixpanel.com/trends_data/', queryParams, function(results) {
+          var data = transformData(results.data.values);
+          eventGraph.MPChart('setData', data);
+        });
+
         var statParams = {
           'query_name': 'update_stats',
           'from_date': new Date(dateRange.from).toISOString().split('T')[0],
           'to_date': new Date(dateRange.to).toISOString().split('T')[0],
           'unit': 'day'
         };
-        
-        $.get('https://mixpanel.com/trends_data/', queryParams, function(results) {
-          var data = transformData(results.data.values);
-          $('.r_num').text(numberWithCommas(data[1]));
-          eventGraph.MPChart('setData', data[0]);
-        });
-
         $.get('https://mixpanel.com/trends_data/', statParams, function(data) {
             if (data.error) {
                 $('.data_view_footer').hide();
@@ -145,13 +144,13 @@
           _.each(dates_values, function(val, date) {
             var percent = 0;
             if (totals[date]) {
-              percent = (val / totals[date]) * 100
+              percent = (val / totals[date]) * 100;
             }
             data[os][date] = parseFloat(percent.toFixed(2));
           });
         });
         
-        return [data, grandTotal];
+        return data;
       }
       
       runQuery();

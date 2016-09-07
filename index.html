@@ -62,12 +62,55 @@
         MP.api.segment(eventName, propName, params).done(function(results) {
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));
-          eventGraph.MPChart('setData', results);
+          eventGraph.MPChart('setData', transformData(results.values));
         });
       };
       
       function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      
+      function transformData(resultData) {
+        var data = {
+            'iOS 10': {},
+            'iOS 9': {},
+            'Older': {}
+        };
+  
+        var totals = {};
+        _.each(resultData, function(dates, os_version) {
+            var recipient = 'Older';
+            if (os_version.match(/^9\./)) {
+                recipient = 'iOS 9';
+            } else if (os_version.match(/^10\./)) {
+                recipient = 'iOS 10';
+            }
+  
+            _.each(dates, function(value, date) {
+                if (parse_date(date).getTime() < mp.report.globals.utc_now) {
+                    if (!(date in data[recipient])) {
+                        data[recipient][date] = 0;
+                    }
+                    if (!(date in totals)) {
+                        totals[date] = 0;
+                    }
+                    data[recipient][date] += value;
+                    totals[date] += value;
+                }
+            });
+        });
+
+        var returnData = _.each(data, function(dates_values, name) {
+          return _.map(dates_values, function(val, date) {
+            var percent = 0;
+            if (totals[date]) {
+              percent = (val / totals[date]) * 100;
+            }
+            return [date, percent];
+          })
+        });
+        
+        return returnData;
       }
       
       runQuery();

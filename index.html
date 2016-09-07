@@ -101,22 +101,35 @@
             });
         });
         console.log(data);
-
-        var returnData = _.map(data, function(dates_values, name) {
-          return _.map(dates_values, function(val, date) {
-            var unixtime = parse_date(date).getTime();//.setTimezone('US/Pacific').getTime();
+        
+        _.each(data, function(dates_values, os) {
+          _.each(dates_values, function(val, date) {
             var percent = 0;
-            if (totals[date]) {
-              percent = (val / totals[date]) * 100;
+            if (dates_values[totals][date]) {
+              percent = (val / dates_values[totals][date]) * 100
             }
-            return [unixtime, percent];
-          }).sort(function(a, b) {
-            return a[0] - b[0]
-          })
+            val = percent;
+          });
         });
         
-        console.log(returnData);
-        return returnData;
+        console.log(data);
+
+        // var returnData = _.map(data, function(dates_values, name) {
+        //   return _.map(dates_values, function(val, date) {
+        //     var unixtime = parse_date(date).getTime();//.setTimezone('US/Pacific').getTime();
+        //     var percent = 0;
+        //     if (totals[date]) {
+        //       percent = (val / totals[date]) * 100;
+        //     }
+        //     return [unixtime, percent];
+        //   }).sort(function(a, b) {
+        //     return a[0] - b[0]
+        //   })
+        // });
+        
+        // console.log(returnData);
+        // return returnData;
+        return data;
       }
       
       var parse_date = function (date_string) {

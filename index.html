@@ -49,7 +49,18 @@
         chartType: 'line',
         highchartsOptions: {
           yAxis: {
-            formatter: function() { return this.value+'%' }
+            labels: {
+              formatter: function() { return this.value + '%' }
+            }
+          },
+          tooltip: {
+            shared: true,
+            crosshairs: true,
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            borderWidth: 1,
+            useHTML: false,
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+            valueDecimals: 2
           }
         }
       });
@@ -69,8 +80,6 @@
         MP.api.segment(eventName, propName, params).done(function(results) {
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));
-          console.log(results);
-          console.log(results.values());
           var data = transformData(results.values());
           eventGraph.MPChart('setData', data);
         });
@@ -124,6 +133,7 @@
       runQuery();
       
       dateSelect.on('change', runQuery);
+      
     </script>
   </body>
 </html>

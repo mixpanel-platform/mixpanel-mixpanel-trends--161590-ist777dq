@@ -105,7 +105,7 @@
         var here = new Date().getTimezoneOffset();
         var PST = '-0800';
         var there = Number(PST) * -6 / 10;
-        d.setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+        return new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
       }
       
       function transformData(resultData) {

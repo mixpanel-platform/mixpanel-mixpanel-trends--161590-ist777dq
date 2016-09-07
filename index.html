@@ -54,8 +54,7 @@
             }
           },
           tooltip: {
-            pointFormatter: function() { return this.value + '%'; },
-            valueDecimals: 2
+            pointFormatter: function() { return this.y + '%'; },
           }
         }
       });
@@ -118,7 +117,7 @@
             if (totals[date]) {
               percent = (val / totals[date]) * 100
             }
-            data[os][date] = percent;
+            data[os][date] = parseFloat(percent).toFixed(2);
           });
         });
         

@@ -106,6 +106,7 @@
         var PST = '-0800';
         var there = Number(PST) * -6 / 10;
         d = new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+        console.log(d)
         d = d.getTime();
         console.log(d);
         return d;

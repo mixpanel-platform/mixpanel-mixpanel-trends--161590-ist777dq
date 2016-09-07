@@ -100,6 +100,14 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
       
+      function parse_date(d) {
+        // copying pieces from dates.js setTimezoneOffset
+        var here = new Date().getTimezoneOffset();
+        var PST = '-0800';
+        var there = Number(PST) * -6 / 10;
+        d.setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+      }
+      
       function transformData(resultData) {
         var data = {
             'iOS 10': {},
@@ -110,24 +118,25 @@
         var grandTotal = 0;
         var totals = {};
         _.each(resultData, function(dates, os_version) {
-            var recipient = 'Older';
-            if (os_version.match(/^9\./)) {
-                recipient = 'iOS 9';
-            } else if (os_version.match(/^10\./)) {
-                recipient = 'iOS 10';
+          var recipient = 'Older';
+          if (os_version.match(/^9\./)) {
+            recipient = 'iOS 9';
+          } else if (os_version.match(/^10\./)) {
+            recipient = 'iOS 10';
+          }
+          
+          _.each(dates, function(value, date) {
+            date = parse_date(date);
+            if (!(date in data[recipient])) {
+              data[recipient][date] = 0;
             }
-            
-            _.each(dates, function(value, date) {
-                if (!(date in data[recipient])) {
-                    data[recipient][date] = 0;
-                }
-                if (!(date in totals)) {
-                    totals[date] = 0;
-                }
-                data[recipient][date] += value;
-                totals[date] += value;
-                grandTotal += value;
-            });
+            if (!(date in totals)) {
+              totals[date] = 0;
+            }
+            data[recipient][date] += value;
+            totals[date] += value;
+            grandTotal += value;
+          });
         });
 
         _.each(data, function(dates_values, os) {

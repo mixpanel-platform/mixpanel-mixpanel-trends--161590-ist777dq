@@ -66,18 +66,33 @@
 
       var runQuery = function() {
         var dateRange = dateSelect.val();
-        var params = {
+        
+        var queryParams = {
           'from_date': new Date(dateRange.from).toISOString().split('T')[0],
           'to_date': new Date(dateRange.to).toISOString().split('T')[0],
           'unit': 'day',
           'query_name': 'ios_fragmentation'
         };
-
-        $.get('https://mixpanel.com/trends_data/', params, function(results) {
-          debugger;
+        var statParams = {
+          'query_name': 'update_stats',
+          'from_date': new Date(dateRange.from).toISOString().split('T')[0],
+          'to_date': new Date(dateRange.to).toISOString().split('T')[0],
+          'unit': 'day'
+        };
+        
+        $.get('https://mixpanel.com/trends_data/', queryParams, function(results) {
           var data = transformData(results.data.values);
           $('.r_num').text(numberWithCommas(data[1]));
           eventGraph.MPChart('setData', data[0]);
+        });
+
+        $.get('https://mixpanel.com/trends_data/', statParams, function(data) {
+            if (data.error) {
+                $('.data_view_footer').hide();
+            } else {
+                var count = _.reduce(data.data.values.Action, function(m, c) { return m + c; }, 0);
+                $('.data_view_footer').show().find('.r_num').text(_.numberFormat(count, 0));
+            }
         });
       };
       

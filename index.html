@@ -119,8 +119,8 @@
       var parse_date = function (date_string) {
           var date = Date.parse(date_string, 'yyyy-MM-dd HH:mm:ss') ||
                  Date.parse(date_string, 'yyyy-MM-dd');
-          // dates from arb are in PST (project time)
-          date.setTimezone('PST');
+          // // dates from arb are in PST (project time)
+          // date.setTimezone('PST');
           return date;
       };
 

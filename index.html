@@ -105,9 +105,10 @@
         var here = new Date().getTimezoneOffset();
         var PST = '-0800';
         var there = Number(PST) * -6 / 10;
-        console.log(new Date(d))
-        console.log(new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000)).getTime())
-        return new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+        d = new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+        d = d.getTime();
+        console.log(d);
+        return d;
       }
       
       function transformData(resultData) {
@@ -128,9 +129,7 @@
           }
           
           _.each(dates, function(value, date) {
-            console.log(date)
             date = parse_date(date);
-            console.log(date)
             if (!(date in data[recipient])) {
               data[recipient][date] = 0;
             }

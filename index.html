@@ -62,7 +62,7 @@
         MP.api.segment(eventName, propName, params).done(function(results) {
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));
-          eventGraph.MPChart('setData', transformData(results));
+          eventGraph.MPChart('setData', transformData(results.values));
         });
       };
       

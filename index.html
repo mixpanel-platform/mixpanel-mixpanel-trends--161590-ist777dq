@@ -106,8 +106,8 @@
           _.each(dates_values, function(val, date) {
             var percent = 0;
             console.log(dates_values)
-            if (dates_values['totals'][date]) {
-              percent = (val / dates_values['totals'][date]) * 100
+            if (totals[date]) {
+              percent = (val / totals[date]) * 100
             }
             val = percent;
           });

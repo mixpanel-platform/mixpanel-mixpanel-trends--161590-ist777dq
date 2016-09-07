@@ -135,16 +135,7 @@
                 return {
                     name: name,
                     color: colors[color_idx],
-                    data: _.map(dates_values, function(val, date) {
-                        var unixtime = parse_date(date).setTimezone('US/Pacific').getTime();
-                        var percent = 0;
-                        if (totals[date]) {
-                            percent = (val / totals[date]) * 100;
-                        }
-                        return [ unixtime, percent ];
-                    }, this).sort(function(a, b) {
-                        return a[0] - b[0];
-                    })
+                    data: dates_values
                 };
             }, this);
 

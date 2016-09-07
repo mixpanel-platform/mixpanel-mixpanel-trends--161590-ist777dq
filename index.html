@@ -81,9 +81,7 @@
         };
   
         var totals = {};
-        console.log(resultData);
         _.each(resultData, function(dates, os_version) {
-            console.log(dates);
             var recipient = 'Older';
             if (os_version.match(/^9\./)) {
                 recipient = 'iOS 9';
@@ -91,8 +89,6 @@
                 recipient = 'iOS 10';
             }
             
-            console.log(recipient);
-  
             _.each(dates, function(value, date) {
                 if (!(date in data[recipient])) {
                     data[recipient][date] = 0;
@@ -106,9 +102,9 @@
         });
         console.log(data);
 
-        var returnData = _.each(data, function(dates_values, name) {
+        var returnData = _.map(data, function(dates_values, name) {
           return _.map(dates_values, function(val, date) {
-            var unixtime = parse_date(date).setTimezone('US/Pacific').getTime();
+            var unixtime = parse_date(date).getTime();//.setTimezone('US/Pacific').getTime();
             var percent = 0;
             if (totals[date]) {
               percent = (val / totals[date]) * 100;

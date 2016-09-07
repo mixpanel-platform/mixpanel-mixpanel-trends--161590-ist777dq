@@ -108,7 +108,8 @@
         console.log(d)
         d = new Date(d);
         console.log(d);
-        d = d.setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
+        console.log(d.getMilliseconds + ((there - here) * 60000))
+        d.setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
         console.log(d);
         return d;
       }

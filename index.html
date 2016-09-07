@@ -54,12 +54,7 @@
             }
           },
           tooltip: {
-            // shared: true,
-            // crosshairs: true,
-            backgroundColor: 'rgba(255, 255, 255, 1)',
-            borderWidth: 1,
-            useHTML: false,
-            pointFormatter: function() { return point.y + '%'; },
+            pointFormatter: function() { return this.value + '%'; },
             valueDecimals: 2
           }
         }

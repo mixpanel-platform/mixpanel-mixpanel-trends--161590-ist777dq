@@ -23,15 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="mixpanel-platform-section">
-      <div class="date_picker_wrap">
-        <div id="date_picker"></div>
-        <div class="date_unit_toggle"></div>
-      </div>
-      <div id="graph"></div>
-    </div>
     <script>
-      var eventGraph  = $('#graph').MPChart({chartType: 'line'});
+      var eventGraph  = $('#report_render_target').MPChart({chartType: 'line'});
       var dateSelect = $('#date_picker').MPDatepicker();
 
       var runQuery = function() {

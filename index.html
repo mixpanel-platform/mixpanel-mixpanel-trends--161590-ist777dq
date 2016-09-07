@@ -55,7 +55,9 @@
           },
           tooltip: {
             formatter: function() {
-              return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
+              console.log(this);
+              console.log(this.point);
+              return '<span style="color:' + this.point.color + '">\u25Cf</span>'+ this.point.name +': <span style="font-weight:bold">'+ this.point.y +' %</span>';
             }
             // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
             // pointFormatter: function() { return this.y + '%'; },

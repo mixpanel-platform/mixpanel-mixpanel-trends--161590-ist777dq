@@ -55,9 +55,9 @@
           },
           tooltip: {
             formatter: function() {
-              console.log(this);
-              console.log(this.point);
-              return '<div class="segment_name" style="color:' + this.point.series.color + '; font-weight: bold;">'+ this.point.series.name +'</div><span class="x_value">' + this.point.x + ': </span><span style="font-weight:bold;">'+ this.point.y +'%</span>';
+              var date = new Date(this.point.x).toString().split(' ').splice(0, 3);
+              var dateString = date[0] + ', ' + date[1] + ' ' + date[2];
+              return '<div class="segment_name" style="color:' + this.point.series.color + '; font-weight: bold;">'+ this.point.series.name +'</div><span class="x_value">' + dateString + ': </span><span style="font-weight:bold;">'+ this.point.y +'%</span>';
             }
             // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
             // pointFormatter: function() { return this.y + '%'; },

@@ -74,7 +74,7 @@
         };
 
         $.get('https://mixpanel.com/trends_data/', params, function(results) {
-          var data = transformData(results.data.values());
+          var data = transformData(results.data.values);
           $('.r_num').text(numberWithCommas(data[1]));
           eventGraph.MPChart('setData', data[0]);
         });

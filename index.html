@@ -21,7 +21,10 @@
         float: right;
       }
       .section.report_area .report_render_target {
-        margin-top: 90px;
+        margin: 90px 0 40px;
+      }
+      .report_window .data_view_footer {
+        float: right;
       }
     </style>
   </head>
@@ -57,6 +60,8 @@
         });
 
         MP.api.segment(eventName, propName, params).done(function(results) {
+          var total = 30,000,000,000; // replace with total results
+          $('.r_num').text(total);
           eventGraph.MPChart('setData', results);
         });
       };

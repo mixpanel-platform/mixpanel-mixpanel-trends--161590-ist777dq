@@ -78,7 +78,7 @@
           'to': new Date(dateRange.to).toISOString().split('T')[0],
           'unit': 'week',
           'query': 'ios_fragmentation'
-        });
+        };
 
         $.get('http://mixpanel.com/trends_data', params, function(results) {
           console.log(results);

@@ -80,7 +80,7 @@
           'query_name': 'ios_fragmentation'
         };
 
-        $.get('http://mixpanel.com/trends_data/', params, function(results) {
+        $.get('https://mixpanel.com/trends_data/', params, function(results) {
           console.log(results);
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));

@@ -6,42 +6,43 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
-  <body class="mixpanel-platform-body">
+  <body>
+    <div class="section top_bar"></div>
+    <div class="report_area section">
+      <div class="report_window">
+        <div class="logo"></div>
+        <div class="report_top"></div>
+      </div>
+    </div>
     <div class="mixpanel-platform-section">
       <div class="date_picker_wrap">
+        <div id="date_picker"></div>
         <div class="date_unit_toggle"></div>
-        <div class="date_picker"></div>
       </div>
       <div id="graph"></div>
     </div>
     <script>
       var eventGraph  = $('#graph').MPChart({chartType: 'line'});
+      var dateSelect = $('#date_picker').MPDatepicker();
 
       var runQuery = function() {
         var eventName = 'Action';
         var propName = '$os_version';
         var dateRange = dateSelect.val();
-        var unit = '';
+        var unit = 'week';
         var params = _.extend(dateRange, {
           'type': 'unique',
           'where': 'defined(properties["$os_version"]) and (properties["$os"] == "iPhone OS" or properties["$os"] == "iOS")',
           'unit': unit,
         });
 
-          MP.api.segment(eventName, propName, params).done(function(results) {
-            eventGraph.MPChart('setData', results);
-          });
-        }
+        MP.api.segment(eventName, propName, params).done(function(results) {
+          eventGraph.MPChart('setData', results);
+        });
       };
       
       runQuery();
       
-      eventSelect.on('change', function(e, eventName) {
-        propSelect.MPPropertySelect('setEvent', eventName);
-        $("#by").show();
-        runQuery();
-      });
-      propSelect.on('change', runQuery);
       dateSelect.on('change', runQuery);
     </script>
   </body>

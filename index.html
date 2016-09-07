@@ -45,6 +45,25 @@
       </div>
     </div>
     <script>
+      var eventGraph  = $('.report_render_target').MPChart({
+        chartType: 'line',
+        highchartsOptions: {
+          yAxis: {
+            labels: {
+              formatter: function() { return this.value + '%'; }
+            }
+          },
+          tooltip: {
+            shared: true,
+            crosshairs: true,
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            borderWidth: 1,
+            useHTML: false,
+            pointFormatter: function() { return point.y + '%'; },
+            valueDecimals: 2
+          }
+        }
+      });
       var dateSelect = $('#date_picker').MPDatepicker();
 
       var runQuery = function() {
@@ -62,27 +81,7 @@
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));
           var data = transformData(results.values());
-      var eventGraph  = $('.report_render_target').MPChart({
-        chartType: 'line',
-        highchartsOptions: {
-          series: data[1],
-          yAxis: {
-            labels: {
-              formatter: function() { return this.value + '%' }
-            }
-          },
-          tooltip: {
-            shared: true,
-            crosshairs: true,
-            backgroundColor: 'rgba(255, 255, 255, 1)',
-            borderWidth: 1,
-            useHTML: false,
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
-            valueDecimals: 2
-          }
-        }
-      });
-          eventGraph.MPChart('setData', data[0]);
+          eventGraph.MPChart('setData', data);
         });
       };
       
@@ -128,22 +127,8 @@
           });
         });
         
-        colors = ['#53a3eb', '#32bbbd', '#a28ccb'];
-                    var color_idx = -1;
-            var chart_data = _.map(data, function(dates_values, name) {
-                color_idx++;
-                return {
-                    name: name,
-                    color: colors[color_idx],
-                    data: dates_values
-                };
-            }, this);
-
-        
-        return [data, chart_data];
+        return data;
       }
-      
-      
       
       runQuery();
       

@@ -78,13 +78,17 @@
         };
   
         var totals = {};
+        console.log(resultData);
         _.each(resultData, function(dates, os_version) {
+            console.log(dates);
             var recipient = 'Older';
             if (os_version.match(/^9\./)) {
                 recipient = 'iOS 9';
             } else if (os_version.match(/^10\./)) {
                 recipient = 'iOS 10';
             }
+            
+            console.log(recipient);
   
             _.each(dates, function(value, date) {
                 if (!(date in data[recipient])) {

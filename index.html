@@ -105,6 +105,8 @@
         var here = new Date().getTimezoneOffset();
         var PST = '-0800';
         var there = Number(PST) * -6 / 10;
+        console.log(new Date(d))
+        console.log(new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000)))
         return new Date(d).setMilliseconds(d.getMilliseconds + ((there - here) * 60000));
       }
       
@@ -126,7 +128,9 @@
           }
           
           _.each(dates, function(value, date) {
+            console.log(date)
             date = parse_date(date);
+            console.log(date)
             if (!(date in data[recipient])) {
               data[recipient][date] = 0;
             }

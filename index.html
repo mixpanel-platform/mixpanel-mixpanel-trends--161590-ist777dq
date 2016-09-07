@@ -87,16 +87,14 @@
             }
   
             _.each(dates, function(value, date) {
-                if (parse_date(date).getTime() < mp.report.globals.utc_now) {
-                    if (!(date in data[recipient])) {
-                        data[recipient][date] = 0;
-                    }
-                    if (!(date in totals)) {
-                        totals[date] = 0;
-                    }
-                    data[recipient][date] += value;
-                    totals[date] += value;
+                if (!(date in data[recipient])) {
+                    data[recipient][date] = 0;
                 }
+                if (!(date in totals)) {
+                    totals[date] = 0;
+                }
+                data[recipient][date] += value;
+                totals[date] += value;
             });
         });
         console.log(data);

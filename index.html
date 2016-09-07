@@ -52,7 +52,7 @@
         var eventName = 'Action';
         var propName = '$os_version';
         var dateRange = dateSelect.val();
-        var unit = 'week';
+        var unit = 'day';
         var params = _.extend(dateRange, {
           'type': 'unique',
           'where': 'defined(properties["$os_version"]) and (properties["$os"] == "iPhone OS" or properties["$os"] == "iOS")',
@@ -109,7 +109,7 @@
             if (totals[date]) {
               percent = (val / totals[date]) * 100
             }
-            val = percent;
+            data[os][date] = percent;
           });
         });
         

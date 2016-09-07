@@ -59,25 +59,27 @@
               var dateString = date[0] + ', ' + date[1] + ' ' + date[2];
               return '<div class="segment_name" style="color:' + this.point.series.color + '; font-weight: bold;">'+ this.point.series.name +'</div><span class="x_value">' + dateString + ': </span><span style="font-weight:bold;">'+ this.point.y +'%</span>';
             }
-            // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
-            // pointFormatter: function() { return this.y + '%'; },
           }
         }
       });
       var dateSelect = $('#date_picker').MPDatepicker();
 
       var runQuery = function() {
-        var eventName = 'Action';
-        var propName = '$os_version';
         var dateRange = dateSelect.val();
-        var unit = 'day';
+        // var params = _.extend(dateRange, {
+        //   'event': 'Action',
+        //   'on': '$os_version',
+        //   'type': 'unique',
+        //   'where': 'defined(properties["$os_version"]) and (properties["$os"] == "iPhone OS" or properties["$os"] == "iOS")',
+        //   'unit': 'day',
+        // });
         var params = _.extend(dateRange, {
-          'type': 'unique',
-          'where': 'defined(properties["$os_version"]) and (properties["$os"] == "iPhone OS" or properties["$os"] == "iOS")',
-          'unit': unit,
+          'unit': 'week',
+          'query': 'ios_fragmentation'
         });
 
-        MP.api.segment(eventName, propName, params).done(function(results) {
+        $.get('http://mixpanel.com/trends_data', params, function(results) {
+          console.log(results);
           var total = 30000000000; // replace with total results
           $('.r_num').text(numberWithCommas(total));
           var data = transformData(results.values());

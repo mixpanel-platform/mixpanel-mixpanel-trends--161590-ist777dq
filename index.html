@@ -66,13 +66,6 @@
 
       var runQuery = function() {
         var dateRange = dateSelect.val();
-        // var params = _.extend(dateRange, {
-        //   'event': 'Action',
-        //   'on': '$os_version',
-        //   'type': 'unique',
-        //   'where': 'defined(properties["$os_version"]) and (properties["$os"] == "iPhone OS" or properties["$os"] == "iOS")',
-        //   'unit': 'day',
-        // });
         var params = {
           'from_date': new Date(dateRange.from).toISOString().split('T')[0],
           'to_date': new Date(dateRange.to).toISOString().split('T')[0],
@@ -81,11 +74,9 @@
         };
 
         $.get('https://mixpanel.com/trends_data/', params, function(results) {
-          console.log(results);
-          var total = 30000000000; // replace with total results
-          $('.r_num').text(numberWithCommas(total));
-          var data = transformData(results.values());
-          eventGraph.MPChart('setData', data);
+          var data = transformData(results.data.values());
+          $('.r_num').text(numberWithCommas(data[1]));
+          eventGraph.MPChart('setData', data[0]);
         });
       };
       
@@ -100,6 +91,7 @@
             'Older': {}
         };
   
+        var grandTotal = 0;
         var totals = {};
         _.each(resultData, function(dates, os_version) {
             var recipient = 'Older';
@@ -118,6 +110,7 @@
                 }
                 data[recipient][date] += value;
                 totals[date] += value;
+                grandTotal += value;
             });
         });
 
@@ -131,7 +124,7 @@
           });
         });
         
-        return data;
+        return [data, grandTotal];
       }
       
       runQuery();

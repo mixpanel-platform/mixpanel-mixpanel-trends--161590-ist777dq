@@ -45,7 +45,14 @@
       </div>
     </div>
     <script>
-      var eventGraph  = $('.report_render_target').MPChart({chartType: 'line'});
+      var eventGraph  = $('.report_render_target').MPChart({
+        chartType: 'line',
+        chartOptions: {
+          yAxis: {
+            formatter: function() { return this.value+'%' }
+          }
+        }
+      });
       var dateSelect = $('#date_picker').MPDatepicker();
 
       var runQuery = function() {

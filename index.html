@@ -101,16 +101,12 @@
       }
       
       function parse_date(d) {
-        // copying pieces from dates.js setTimezoneOffset
+        // copying pieces from dates.js, starting with setTimezone
         var here = new Date().getTimezoneOffset();
         var PST = '-0800';
         var there = Number(PST) * -6 / 10;
-        console.log(d)
         d = new Date(d);
-        console.log(d);
-        console.log(d.getMilliseconds() + ((there - here) * 60000))
         d.setMilliseconds(d.getMilliseconds() + ((there - here) * 60000));
-        console.log(d);
         return d;
       }
       

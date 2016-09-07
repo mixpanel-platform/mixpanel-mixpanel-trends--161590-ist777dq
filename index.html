@@ -117,7 +117,7 @@
             if (totals[date]) {
               percent = (val / totals[date]) * 100
             }
-            data[os][date] = parseFloat(percent).toFixed(2);
+            data[os][date] = parseFloat(percent.toFixed(2));
           });
         });
         

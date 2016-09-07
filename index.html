@@ -54,7 +54,10 @@
             }
           },
           tooltip: {
-            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
+            formatter: function() {
+              return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
+            }
+            // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}%</b><br/>'
             // pointFormatter: function() { return this.y + '%'; },
           }
         }
